@@ -24,7 +24,7 @@ const Register = ({loadUser, handleAuthentication}) => {
 
     const registerUser = ()=>{
         if(email && password && name){
-            fetch('https://afternoon-hollows-86751.herokuapp.com/register', {
+            fetch('https://herokuServer/register', {
             method: "post",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
