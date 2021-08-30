@@ -54,7 +54,7 @@ const App = ()=> {
 
   const [executeScroll, elRef] = useScroll();
 
-  const thresholdEntries = 30;
+  const thresholdEntries = 50;
   const handleSearchBox = (event) =>{
     setSearchField(event.target.value);
   }
