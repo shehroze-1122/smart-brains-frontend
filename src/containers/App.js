@@ -54,8 +54,7 @@ const App = ()=> {
 
   const [executeScroll, elRef] = useScroll();
 
-
-
+  const thresholdEntries = 30;
   const handleSearchBox = (event) =>{
     setSearchField(event.target.value);
   }
@@ -81,15 +80,16 @@ const App = ()=> {
 
 
   const handleImageSubmit = () =>{
-
+    
     setButtonClicked(true);
-    if(searchField !==''){
+    if(searchField !=='' && currentUser.entries<thresholdEntries){
       setImageUrl(searchField);
       fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify( {
-          url: searchField
+          url: searchField,
+          id: currentUser.id
         }) 
       })
       .then(data=>data.json())
@@ -109,6 +109,11 @@ const App = ()=> {
       .then(NewEntries=> setCurrentUser(Object.assign(currentUser, {entries: NewEntries})))
       .catch(err=>console.log(err))
     }
+    else{
+      alert("You have reached your limit for number of entries");
+  
+    }
+    
         
   }
 
@@ -134,6 +139,8 @@ const App = ()=> {
 
   }
 
+
+
   return (
     <div>
        <Particles className="background-particles" params={params}/> 
@@ -158,8 +165,8 @@ const App = ()=> {
                  <NavigationHome handleSignOut={handleSignOut}/>
                  <Logo/>
                  <Header/>
-                 <UserInfo name={currentUser.name} entries={currentUser.entries}/>
-                 <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit}/>
+                 <UserInfo name={currentUser.name} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
+                 <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked}/>
             </HomeProtectedRoute>
          </Switch>
