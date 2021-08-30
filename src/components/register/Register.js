@@ -7,6 +7,8 @@ const Register = ({loadUser, handleAuthentication}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [registerationError, setRegisterationError] = useState(false);
+    const [emptyRequest, setEmptyRequest] = useState(false);
 
     const handleEmailChange = (event)=>{
         setEmail(event.target.value)
@@ -15,7 +17,6 @@ const Register = ({loadUser, handleAuthentication}) => {
 
     const handlePasswordChange = (event)=>{
         setPassword(event.target.value)
-
     }
 
     const handleNameChange = (event)=>{
@@ -24,6 +25,7 @@ const Register = ({loadUser, handleAuthentication}) => {
 
     const registerUser = ()=>{
         if(email && password && name){
+            setEmptyRequest(false);
             fetch('https://afternoon-hollows-86751.herokuapp.com/register', {
             method: "post",
             headers: {'Content-Type': 'application/json'},
@@ -31,20 +33,24 @@ const Register = ({loadUser, handleAuthentication}) => {
                 name: name,
                 email: email,
                 password: password
+             })
             })
-        })
-        .then(response=>response.json())
-        .then(user=>{
-            if(user.id){
-                handleAuthentication(true);
-                loadUser(user);
-                history.push("/home");
+            .then(response=>response.json())
+            .then(user=>{
+                if(user.id){
+                    handleAuthentication(true);
+                    loadUser(user);
+                    history.push("/home");
 
-            } 
+                } else{
+                    setRegisterationError(true);
+                }
 
-        })
-        .catch(err=>console.log(err))
+            })
+            .catch(err=>console.log(err))
 
+        }else{
+            setEmptyRequest(true);
         }
         
     }
@@ -67,6 +73,8 @@ const Register = ({loadUser, handleAuthentication}) => {
                         <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" required type="password" name="password"  id="password" onChange={handlePasswordChange}/>
                     </div>
                     </fieldset>
+                    {emptyRequest? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Please fill out the required fields</p>:null}
+                    {registerationError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>A user with this email is already registered</p>:null}
                     <div className="tc">
                         <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib" type="submit" value="Register" onClick={()=>registerUser()}/>
                     </div>

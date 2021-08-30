@@ -143,7 +143,7 @@ const App = ()=> {
             <Route exact path="/">
               <Fragment>
                 <NavigationSignIn/>
-                <SignIn loadUser={loadUser} handleAuthentication={handleAuthentication}/>
+                <SignIn loadUser={loadUser} handleAuthentication={handleAuthentication} isAuthenticated={isAuthenticated}/>
               </Fragment>
             </Route>
 

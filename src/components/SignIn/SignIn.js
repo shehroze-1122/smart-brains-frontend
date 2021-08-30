@@ -2,10 +2,12 @@ import {React, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import './signin.css';
 
-const SignIn = ({loadUser, handleAuthentication}) => {
+const SignIn = ({loadUser, handleAuthentication, isAuthenticated}) => {
     const history = useHistory();
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
+    const [signInError, setSignInError ] = useState(false);
+
     
     const handleEmail = (event)=>{
         setSignInEmail(event.target.value)
@@ -34,6 +36,8 @@ const SignIn = ({loadUser, handleAuthentication}) => {
                 loadUser(data);
                 history.push("/home");
                 
+            }else{
+                setSignInError(true);
             }
             
         })
@@ -59,6 +63,7 @@ const SignIn = ({loadUser, handleAuthentication}) => {
                         <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" onChange={handlePassword} required type="password" name="password"  id="password" />
                     </div>
                     </fieldset>
+                    {signInError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Wrong email or password</p>:null}
                     <div className="tc">
                         <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f4 dib" type="submit" value="Sign in" required onClick={()=>signInSubmit()}/>
                     
