@@ -1,10 +1,10 @@
 import {React} from 'react'
 import './FaceRecognitionBox.css'
 
-const FaceRecognitionBox = ({imageSource, imageRef, faceBoxesCoordinates, isButtonClicked}) => {
+const FaceRecognitionBox = ({imageSource, imageRef, faceBoxesCoordinates, isButtonClicked, validBoundingData}) => {
 
 
-        if(imageSource && isButtonClicked){
+        if(imageSource && isButtonClicked && validBoundingData){
             return(
                 <div className="image center ma3 pa3" >
                     <div className="absolute mt2">
@@ -18,9 +18,9 @@ const FaceRecognitionBox = ({imageSource, imageRef, faceBoxesCoordinates, isButt
                 </div> 
             ) 
 
-        }else if(isButtonClicked){
+        }else if(isButtonClicked && !validBoundingData){
 
-            return <p ref={imageRef} className="tc pa3 f3">Please enter a Image Url</p>
+            return <p ref={imageRef} className="tc pa3 f3">Please enter a valid Image Url</p>
         }else{
             return <div ref={imageRef}></div>
         }

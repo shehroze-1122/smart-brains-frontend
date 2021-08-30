@@ -42,6 +42,7 @@ const App = ()=> {
   const [imageUrl, setImageUrl] = useState('');
   const [boxValues, setBoxValues] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [validBoundingData, setValidBoundingData] = useState(true);
   const [currentUser, setCurrentUser] = useState({
     id: '',
     name: '',
@@ -94,9 +95,16 @@ const App = ()=> {
       })
       .then(data=>data.json())
       .then(response =>{
-      calculateImageCoordinates(response);
+        if(response){
+          setValidBoundingData(true);
+          calculateImageCoordinates(response);
+        }
+      
       })
-      .catch(err=> console.log("Error", err));
+      .catch(err=> {
+        console.log("Error", err)
+        setValidBoundingData(false);
+      });
 
       fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
         method: 'put',
@@ -109,7 +117,7 @@ const App = ()=> {
       .then(NewEntries=> setCurrentUser(Object.assign(currentUser, {entries: NewEntries})))
       .catch(err=>console.log(err))
     }
-    else{
+    if(currentUser.entries === thresholdEntries){
       alert("You have reached your limit for number of entries");
   
     }
@@ -167,7 +175,7 @@ const App = ()=> {
                  <Header/>
                  <UserInfo name={currentUser.name} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
                  <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
-                 <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked}/>
+                 <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
             </HomeProtectedRoute>
          </Switch>
        </Router>
