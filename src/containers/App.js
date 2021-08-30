@@ -85,7 +85,7 @@ const App = ()=> {
     setButtonClicked(true);
     if(searchField !==''){
       setImageUrl(searchField);
-      fetch('https://herokuServer/imageUrl', {
+      fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify( {
@@ -98,7 +98,7 @@ const App = ()=> {
       })
       .catch(err=> console.log("Error", err));
 
-      fetch('https://herokuServer/image', {
+      fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
         method: 'put',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify( {
