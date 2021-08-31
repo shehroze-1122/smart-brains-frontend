@@ -5,7 +5,7 @@ const NavigationHome = ({handleSignOut}) => {
     return (
         <div>
             <Link to="/">
-                <p className="tr f3 fw2 link dim  white ma3 pa3 mt3 pointer fr cf w-50" onClick={()=>handleSignOut()}>Sign Out<i className="fa fa-sign-out pl3" aria-hidden="true"></i></p>
+                <p className="tr f3 fw2 link dim  white ma3 pa3 mt3 pointer fr cf w-60" onClick={()=>handleSignOut()}>Sign Out<i className="fa fa-sign-out pl3" aria-hidden="true"></i></p>
             </Link>        
         </div>
     )

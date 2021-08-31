@@ -2,7 +2,7 @@
 #container {
     display: block;
     clear: both;
-    font-size: 1.5rem;
+    font-size: 2rem;
     width: 97vw;
     margin: 3vw auto;
     padding-top: 20px;
@@ -11,7 +11,7 @@
   h1 {
     text-align: center;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 2em;
     letter-spacing: 8px;
     font-family: 'Courier';
     font-weight: 800;
@@ -198,5 +198,16 @@
     100% {
       transform: none;
       opacity: 0.25;
+    }
+  }
+
+  @media (max-width: 768px) and (min-width: 371px){
+    h1{
+      font-size: 1.8rem;
+    }
+  }
+  @media (max-width: 370px){
+    h1{
+      font-size: 1.2rem;
     }
   }

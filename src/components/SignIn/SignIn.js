@@ -1,8 +1,8 @@
-import {React, useState} from 'react';
+import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import './signin.css';
 
-const SignIn = ({loadUser, handleAuthentication, isAuthenticated}) => {
+const SignIn = ({loadUser, handleAuthentication}) => {
     const history = useHistory();
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');

@@ -75,16 +75,18 @@ const App = ()=> {
       boundingBox.right_col = width - (boundingBox.right_col*width);
       boundingBox.bottom_row = height - (boundingBox.bottom_row*height);
     })
+   
     executeScroll();
     setBoxValues(boundingBoxes)
   }
 
 
   const handleImageSubmit = () =>{
-    
     setButtonClicked(true);
+
     if(searchField !=='' && currentUser.entries<thresholdEntries){
       setImageUrl(searchField);
+
       fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -95,9 +97,12 @@ const App = ()=> {
       })
       .then(data=>data.json())
       .then(response =>{
-        if(response){
+
+        if(response.outputs){
           setValidBoundingData(true);
           calculateImageCoordinates(response);
+        }else{
+          setValidBoundingData(false);
         }
       
       })
@@ -106,24 +111,32 @@ const App = ()=> {
         setValidBoundingData(false);
       });
 
-      fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify( {
-          id: currentUser.id
-        }) 
-      })
-      .then(response=>response.json())
-      .then(NewEntries=> setCurrentUser(Object.assign(currentUser, {entries: NewEntries})))
-      .catch(err=>console.log(err))
+      updateEntries();
+
     }
+    
+    
     if(currentUser.entries === thresholdEntries){
       alert("You have reached your limit for number of entries");
-  
     }
     
         
   }
+
+  const updateEntries = async () =>{
+
+      const resp = await fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify( {
+        id: currentUser.id
+      }) 
+    })
+    const newEntries = await resp.json()
+    setCurrentUser(Object.assign(currentUser, {entries: newEntries}))
+
+  }
+
 
   const loadUser = (user)=>{
     setCurrentUser({

@@ -21,3 +21,17 @@ code {
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 768px) and (min-width: 371px){
+  span, button, p, input, input::-webkit-input-placeholder{
+    font-size: 1rem;
+  }
+}
+@media (max-width: 370px){
+  span, p, input, input::-webkit-input-placeholder{
+    font-size: 0.6rem;
+  }
+  button{
+    font-size: 0.5rem;
+  }
+}
