@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import './signin.css';
 
@@ -7,20 +7,12 @@ const SignIn = ({loadUser, handleAuthentication}) => {
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
     const [signInError, setSignInError ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     
-    const handleEmail = (event)=>{
-        setSignInEmail(event.target.value)
-
-    }
-
-    const handlePassword = (event)=>{
-        setSignInPassword(event.target.value)
-    }
-
     const signInSubmit = () =>{
         if(signInEmail && signInPassword){
-
+            setIsLoading(true);
             fetch('https://afternoon-hollows-86751.herokuapp.com/signin',{
             method:'post',
             headers: {'Content-Type':'application/json'},
@@ -34,19 +26,32 @@ const SignIn = ({loadUser, handleAuthentication}) => {
             if(data !== "failed"){
                 handleAuthentication(true);
                 loadUser(data);
+                
                 history.push("/home");
                 
             }else{
                 setSignInError(true);
             }
-            
+            setIsLoading(false);
         })
         .catch((err)=>{
+            setIsLoading(false);
             console.log("Wrong email or password")
         })
 
         }
     }
+
+    
+    const handleEmail = (event)=>{
+        setSignInEmail(event.target.value)
+
+    }
+
+    const handlePassword = (event)=>{
+        setSignInPassword(event.target.value)
+    }
+
 
     return (
         <article className="center ba dark-gray b--black-10 mt4 w-100 w-50-m w-25-l mw13 br3 db shadow-3 cf">
@@ -65,7 +70,7 @@ const SignIn = ({loadUser, handleAuthentication}) => {
                     </fieldset>
                     {signInError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Wrong email or password</p>:null}
                     <div className="tc">
-                        <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f4 dib" type="submit" value="Sign in" required onClick={()=>signInSubmit()}/>
+                        <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f4 dib" type="submit" value={isLoading? "Signing in...": "Sign In"} disabled={isLoading===true} required onClick={()=>signInSubmit()}/>
                     
                     </div>
                     <div className="lh-copy mt3 tc">
