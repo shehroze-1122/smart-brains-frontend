@@ -26,13 +26,14 @@ const SignIn = ({loadUser, handleAuthentication}) => {
             if(data !== "failed"){
                 handleAuthentication(true);
                 loadUser(data);
-                
+                setIsLoading(false);
                 history.push("/home");
                 
             }else{
+                setIsLoading(false);
                 setSignInError(true);
             }
-            setIsLoading(false);
+            
         })
         .catch((err)=>{
             setIsLoading(false);
@@ -70,7 +71,7 @@ const SignIn = ({loadUser, handleAuthentication}) => {
                     </fieldset>
                     {signInError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Wrong email or password</p>:null}
                     <div className="tc">
-                        <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f4 dib" type="submit" value={isLoading? "Signing in...": "Sign In"} disabled={isLoading===true} required onClick={()=>signInSubmit()}/>
+                        <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f4 dib" type="submit" value={isLoading? "Signing in...": "Sign In"} disabled={isLoading} required onClick={()=>signInSubmit()}/>
                     
                     </div>
                     <div className="lh-copy mt3 tc">

@@ -1,14 +1,17 @@
-import {React} from 'react'
-import './FaceRecognitionBox.css'
+import React from 'react';
+// import CircularProgress from '@material-ui/core/CircularProgress';
+import './FaceRecognitionBox.css';
 
-const FaceRecognitionBox = ({imageSource, imageRef, faceBoxesCoordinates, isButtonClicked, validBoundingData}) => {
+const FaceRecognitionBox = ({imageSource, faceBoxesCoordinates, isButtonClicked, validBoundingData}) => {
 
 
         if(imageSource && isButtonClicked && validBoundingData){
             return(
                 <div className="image center ma3 pa3" >
                     <div className="absolute mt2">
-                        <img id="img" src={imageSource} width="600px"  alt='' ref={imageRef}/>
+                    {/* {isImageLoading? <div className="center mt3"> <span className="f3 db pa2 ma2">Working on it. Hang on tight!</span><CircularProgress color="secondary" /></div>:null} */}
+
+                        <img id="img" src={imageSource} width="600px"  alt='' />
                         {   
                             faceBoxesCoordinates.map((faceBoxCoordinates, ind)=>{
                                 return (<div className="bounding-box" key={ind} style={{'top':faceBoxCoordinates.top_row,  'left':faceBoxCoordinates.left_col, 'right':faceBoxCoordinates.right_col, 'bottom':faceBoxCoordinates.bottom_row}}></div>)
@@ -18,10 +21,12 @@ const FaceRecognitionBox = ({imageSource, imageRef, faceBoxesCoordinates, isButt
                 </div> 
             ) 
 
-        }else if(isButtonClicked && !validBoundingData){
-            return <p ref={imageRef} className="tc pa3 f3">Please enter a valid Image Url</p>
-        }else{
-            return <div ref={imageRef}></div>
+        }       
+        else if(isButtonClicked && !validBoundingData ){
+            return <p  className="tc pa3 f3">Please enter a valid Image Url</p>
+        }
+        else{
+            return <div></div>
         }
     
 }

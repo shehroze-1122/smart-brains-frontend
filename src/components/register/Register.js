@@ -9,6 +9,7 @@ const Register = ({loadUser, handleAuthentication}) => {
     const [name, setName] = useState('');
     const [registerationError, setRegisterationError] = useState(false);
     const [emptyRequest, setEmptyRequest] = useState(false);
+    const [isLoading, setIslLoading] = useState(false);
 
     const handleEmailChange = (event)=>{
         setEmail(event.target.value)
@@ -25,6 +26,7 @@ const Register = ({loadUser, handleAuthentication}) => {
 
     const registerUser = ()=>{
         if(email && password && name){
+            setIslLoading(true);
             setEmptyRequest(false);
             fetch('https://afternoon-hollows-86751.herokuapp.com/register', {
             method: "post",
@@ -45,9 +47,13 @@ const Register = ({loadUser, handleAuthentication}) => {
                 } else{
                     setRegisterationError(true);
                 }
+                setIslLoading(false);
 
             })
-            .catch(err=>console.log(err))
+            .catch(err=>{
+                console.log(err)
+                setIslLoading(false);
+            })
 
         }else{
             setEmptyRequest(true);
@@ -74,9 +80,9 @@ const Register = ({loadUser, handleAuthentication}) => {
                     </div>
                     </fieldset>
                     {emptyRequest? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Please fill out the required fields</p>:null}
-                    {registerationError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>A user with this email is already registered</p>:null}
+                    {registerationError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>This email is already registered</p>:null}
                     <div className="tc">
-                        <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f5 dib" type="submit" value="Register" onClick={()=>registerUser()}/>
+                        <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f5 dib" type="submit" disabled={isLoading} value={isLoading? "Registering...": "Register"} onClick={()=>registerUser()}/>
                     </div>
                 </div>
             </main>

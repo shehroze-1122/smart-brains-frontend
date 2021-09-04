@@ -2,3 +2,7 @@
     max-width: 690px;
     min-width: auto;
 }
+.image-form input,.image-form button {
+    font-family: 'Roboto', 'Oxygen', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif ;
+}

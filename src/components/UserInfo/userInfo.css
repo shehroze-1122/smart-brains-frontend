@@ -2,6 +2,10 @@
     margin-top: 35px;
     margin-bottom: 20px;
 }
+.user-info p{
+    width: fit-content;
+    font-size: 1.3rem;
+}
 
 @media (min-width: 768px){
     .user-info{

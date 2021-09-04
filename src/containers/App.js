@@ -15,6 +15,7 @@ import Register from '../components/register/Register'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
+
 const params = {
   particles: {
     number: {
@@ -51,6 +52,7 @@ const App = ()=> {
     entries: 0
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
 
   const [executeScroll, elRef] = useScroll();
@@ -83,9 +85,10 @@ const App = ()=> {
 
   const handleImageSubmit = () =>{
     setButtonClicked(true);
-
+    
     if(searchField !=='' && currentUser.entries<thresholdEntries){
       setImageUrl(searchField);
+      setIsImageLoading(true);
 
       fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
         method: 'post',
@@ -101,16 +104,18 @@ const App = ()=> {
         if(response.outputs){
           setValidBoundingData(true);
           calculateImageCoordinates(response);
-        }else{
+        }
+        else{
           setValidBoundingData(false);
         }
-      
+       setIsImageLoading(false);
       })
       .catch(err=> {
         console.log("Error", err)
         setValidBoundingData(false);
+        setIsImageLoading(false);
       });
-
+    
       updateEntries();
 
     }
@@ -136,7 +141,7 @@ const App = ()=> {
     setCurrentUser(Object.assign(currentUser, {entries: newEntries}))
 
   }
-
+ 
 
   const loadUser = (user)=>{
     setCurrentUser({
@@ -159,7 +164,6 @@ const App = ()=> {
     setBoxValues([]);
 
   }
-
 
 
   return (
@@ -187,7 +191,7 @@ const App = ()=> {
                  <Logo/>
                  <Header/>
                  <UserInfo name={currentUser.name} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
-                 <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
+                 <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} isImageLoading={isImageLoading}/>
                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
             </HomeProtectedRoute>
          </Switch>
