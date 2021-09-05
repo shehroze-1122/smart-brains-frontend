@@ -11,7 +11,9 @@ import UserInfo from '../components/UserInfo/UserInfo';
 import ImageInput from '../components/ImageInput/ImageInput';
 import FaceRecognitionBox from '../components/FaceRecognitionBox/FaceRecognitionBox';
 import SignIn from '../components/SignIn/SignIn';
-import Register from '../components/register/Register'
+import Register from '../components/register/Register';
+import Profile from '../components/Profile/Profile';
+import Alert from '../components/Alert/Alert';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
@@ -169,7 +171,7 @@ const App = ()=> {
   return (
     <div>
        <Particles className="background-particles" params={params}/> 
-
+      {navigator.onLine? null: <Alert alertTitle="Network Error" alertMessage="Sorry couldn't connect to the server. Please try again later" color="danger"/>}
         <Router>
          <Switch>
             <Route exact path="/">
@@ -193,6 +195,11 @@ const App = ()=> {
                  <UserInfo name={currentUser.name} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
                  <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} isImageLoading={isImageLoading}/>
                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
+            </HomeProtectedRoute>
+
+            <HomeProtectedRoute exact path="/profile" isAuthenticated={isAuthenticated}>
+              <NavigationHome handleSignOut={handleSignOut}/>
+              <Profile user={currentUser}/>
             </HomeProtectedRoute>
          </Switch>
        </Router>

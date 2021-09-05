@@ -1,5 +1,4 @@
 import React from 'react';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import './FaceRecognitionBox.css';
 
 const FaceRecognitionBox = ({imageSource, faceBoxesCoordinates, isButtonClicked, validBoundingData}) => {
@@ -9,8 +8,7 @@ const FaceRecognitionBox = ({imageSource, faceBoxesCoordinates, isButtonClicked,
             return(
                 <div className="image center ma3 pa3" >
                     <div className="absolute mt2">
-                    {/* {isImageLoading? <div className="center mt3"> <span className="f3 db pa2 ma2">Working on it. Hang on tight!</span><CircularProgress color="secondary" /></div>:null} */}
-
+                    
                         <img id="img" src={imageSource} width="600px"  alt='' />
                         {   
                             faceBoxesCoordinates.map((faceBoxCoordinates, ind)=>{

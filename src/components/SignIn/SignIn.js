@@ -9,8 +9,8 @@ const SignIn = ({loadUser, handleAuthentication}) => {
     const [signInError, setSignInError ] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    
     const signInSubmit = () =>{
+
         if(signInEmail && signInPassword){
             setIsLoading(true);
             fetch('https://afternoon-hollows-86751.herokuapp.com/signin',{
@@ -70,6 +70,7 @@ const SignIn = ({loadUser, handleAuthentication}) => {
                     </div>
                     </fieldset>
                     {signInError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Wrong email or password</p>:null}
+
                     <div className="tc">
                         <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f4 dib" type="submit" value={isLoading? "Signing in...": "Sign In"} disabled={isLoading} required onClick={()=>signInSubmit()}/>
                     

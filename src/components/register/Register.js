@@ -51,7 +51,7 @@ const Register = ({loadUser, handleAuthentication}) => {
 
             })
             .catch(err=>{
-                console.log(err)
+                console.log(err);
                 setIslLoading(false);
             })
 

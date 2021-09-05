@@ -1,0 +1,33 @@
+.navbar{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+
+}
+.navbar a{
+    text-decoration: none;
+}
+.active{
+    border-bottom: 3px solid red;
+}
+
+@media (min-width: 481px) and (max-width: 768px){
+    .navbar p{
+        font-size: 1.2rem;
+    }
+}
+@media (max-width: 480px) and (min-width: 355px){
+    .navbar p{
+        margin: 4px;
+        padding: 16px 8px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 354px){
+    .navbar p{
+        margin: 4px;
+        padding: 16px 4px;
+        font-size: 1rem;
+    }
+}

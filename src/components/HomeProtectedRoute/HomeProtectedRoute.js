@@ -12,9 +12,6 @@ export const HomeProtectedRoute = ({children, isAuthenticated, ...rest}) => {
         return <Redirect
         to={{
           pathname: "/",
-          state: {
-            from: '/home'
-          }
         }}
       /> 
     }
