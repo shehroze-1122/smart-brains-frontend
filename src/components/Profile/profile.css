@@ -12,21 +12,33 @@
 }
 .profile-item label{
     display: block;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: rgba(0,0,0,.4);
 }
 .profile input{
     border: none;
+    outline: none;
     background: none;
     cursor: pointer;
-    padding:10px 0px;
 }
 
 .profile-item p, .profile-item input{
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 500;
     color: rgba(0,0,0,.7);
     line-height: 15px;
+}
+.profile-name p{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+.profile-name i:hover{
+    cursor: pointer;
+    color: orangered
 }
 
 .profile h2{
@@ -37,10 +49,10 @@
 }
 @media(max-width: 768px){
     .profile-item label{
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     .profile p{
-        font-size: 1.2rem
+        font-size: 1.1rem
     }
     .profile h2{
         font-size: 1.3rem;
@@ -48,6 +60,6 @@
 }
 @media(max-width: 480px){
     .profile{
-        margin: 30px 30px;
+        margin: 30px;
     }
 }

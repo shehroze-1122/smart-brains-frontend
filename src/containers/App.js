@@ -122,7 +122,6 @@ const App = ()=> {
 
     }
     
-    
     if(currentUser.entries === thresholdEntries){
       alert("You have reached your limit for number of entries");
     }
@@ -157,7 +156,6 @@ const App = ()=> {
 
   const handleAuthentication = (loginState)=>{
     setIsAuthenticated(loginState);
-
   }
   const handleSignOut = ()=>{
     setImageUrl('');
@@ -167,6 +165,12 @@ const App = ()=> {
 
   }
 
+  const handleUsernameUpdate = (newName)=>{
+    console.log(newName)
+    setCurrentUser(Object.assign(currentUser, {name: newName}));
+
+  }
+console.log(currentUser)
 
   return (
     <div>
@@ -189,17 +193,17 @@ const App = ()=> {
             </Route>
 
             <HomeProtectedRoute exact path="/home" isAuthenticated={isAuthenticated}>
-                 <NavigationHome handleSignOut={handleSignOut}/>
+                 <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
                  <Logo/>
                  <Header/>
-                 <UserInfo name={currentUser.name} entries={currentUser.entries} thresholdEntries={thresholdEntries}/>
+                 <UserInfo currentUser={currentUser} thresholdEntries={thresholdEntries}/>
                  <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} isImageLoading={isImageLoading}/>
                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
             </HomeProtectedRoute>
 
             <HomeProtectedRoute exact path="/profile" isAuthenticated={isAuthenticated}>
-              <NavigationHome handleSignOut={handleSignOut}/>
-              <Profile user={currentUser}/>
+              <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
+              <Profile user={currentUser}  handleUsernameUpdate={handleUsernameUpdate} Alert={Alert}/>
             </HomeProtectedRoute>
          </Switch>
        </Router>

@@ -1,6 +1,9 @@
 import React from 'react'
 import './userInfo.css'
-const UserInfo = ({name, entries, thresholdEntries}) => {
+const UserInfo = ({currentUser, thresholdEntries}) => {
+  
+  const  {name, entries } = currentUser;
+
     return (
         <div className="user-info pa1 tc">
           <div className="f4 mt2">

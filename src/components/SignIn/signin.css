@@ -2,3 +2,15 @@
     display: block;
     clear: both;
  }
+.signin-form{
+    max-width: 400px;
+    
+}
+@media(max-width: 420px){
+    .signin-form{
+        margin: 40px;
+    }
+    .signin-form legend{
+        font-size: 1.6rem;
+    }
+}

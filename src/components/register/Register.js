@@ -61,7 +61,7 @@ const Register = ({loadUser, handleAuthentication}) => {
         
     }
     return (
-        <article className="center ba dark-gray b--black-10 mt4 w-100 w-50-m w-25-l mw13 br3 db shadow-3 cf">
+        <article className="center ba dark-gray b--black-10 mt4 mw13 br3 db shadow-3 cf register-form">
             <main className="pa4 black-80  ">
                 <div className="measure">
                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

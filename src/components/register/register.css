@@ -2,3 +2,15 @@
     display: block;
     clear: both;
  }
+ .register-form{
+    max-width: 400px;
+    
+}
+@media(max-width: 420px){
+    .register-form{
+        margin: 40px;
+    }
+    .register-form legend{
+        font-size: 1.6rem;
+    }
+}
