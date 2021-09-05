@@ -17,7 +17,7 @@ This repository is dedicated to the **client side**.
 ![Sign In form](https://github.com/shehroze-1122/smart-brains-frontend/blob/main/Readme%20Images/SignIn.PNG)
 
 
-### Home
+## Home
 
 ![Home page](https://github.com/shehroze-1122/smart-brains-frontend/blob/main/Readme%20Images/Home.PNG)
 
@@ -29,14 +29,14 @@ You can view your profile and also you have the option of changing your username
 ![Profile](https://github.com/shehroze-1122/smart-brains-frontend/blob/main/Readme%20Images/Profile.PNG)
 
 
-### Image Link
+## Image Link
 
 To test this app with a image, you would need a image link which can be copied on google by just right clicking on any image you would like and then hit `Copy Image Link`
 
 ![Image Link](https://github.com/shehroze-1122/smart-brains-frontend/blob/main/Readme%20Images/imageLink.png)
 
 
-### Face Detection
+## Face Detection
 
 Now just copy the link to the searchfield on **Smart Brain** and hit Detect! And here you have it!
 
