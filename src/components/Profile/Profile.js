@@ -1,9 +1,11 @@
 import React,{ useState } from 'react';
-import './profile.css';
-// import Alert from '../Alert/Alert';
 import Button from '@material-ui/core/Button';
+import './profile.css';
+
+
 
 const Profile =({user, handleUsernameUpdate, Alert}) =>{
+
 
     const { name, email, joined, entries } = user;
     const joinDate = joined.split('T');
@@ -68,7 +70,6 @@ const Profile =({user, handleUsernameUpdate, Alert}) =>{
     }
     return(
         <>
-        
             <div className="profile center ba b--black-10 br3 shadow-3 cf mt3" onMouseLeave={() => { document.addEventListener("click", onClickOutsideListener)}}>
             {errorUpdating? <Alert alertTitle="Failed" alertMessage="Sorry, we couldn't update your name" color="danger"/>: null}
             {successUpdating? <Alert alertTitle="Success" alertMessage="Successfully updated your username" color="success"/>: null}
@@ -80,12 +81,10 @@ const Profile =({user, handleUsernameUpdate, Alert}) =>{
                         <p><input name="username" id="name-editable" type="text" defaultValue={username} onChange={handleNameChange} onClick={()=>selectInput()}/>
                         <i className="far fa-edit black" onClick={()=>selectInput()}></i></p>
                     </div>
-                
 
-                    <Button variant="contained" id='update-name-button' style={{display:'none'}} color="primary" disabled={username===name || username===''} onClick={()=>updateUsername()}>Update</Button>
+                    <Button  variant="contained" color="primary" size="small" id='update-name-button' style={{display:'none'}} disabled={username===name || username===''} onClick={()=>updateUsername()}>Update</Button>
                     
                 </div>
-
                 <div className="profile-item">
                     <label>Email</label>
                     <p>{email}</p>

@@ -1,7 +1,5 @@
 import React, { useState, useRef, Fragment} from 'react';
-import './App.css';
 import Particles from 'react-particles-js';
-import 'tachyons';
 import NavigationHome from '../components/Navigation/NavigationHome';
 import NavigationSignIn from '../components/Navigation/NavigationSignIn';
 import { HomeProtectedRoute } from '../components/HomeProtectedRoute/HomeProtectedRoute';
@@ -14,7 +12,11 @@ import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/register/Register';
 import Profile from '../components/Profile/Profile';
 import Alert from '../components/Alert/Alert';
+import NotFound404 from '../components/NotFound404/NotFound404';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import './App.css';
+import 'tachyons';
+
 
 
 
@@ -170,7 +172,6 @@ const App = ()=> {
     setCurrentUser(Object.assign(currentUser, {name: newName}));
 
   }
-console.log(currentUser)
 
   return (
     <div>
@@ -205,6 +206,10 @@ console.log(currentUser)
               <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
               <Profile user={currentUser}  handleUsernameUpdate={handleUsernameUpdate} Alert={Alert}/>
             </HomeProtectedRoute>
+
+            <Route path="/*">
+              <NotFound404/>
+            </Route>
          </Switch>
        </Router>
        

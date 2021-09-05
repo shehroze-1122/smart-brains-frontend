@@ -58,8 +58,13 @@
         font-size: 1.3rem;
     }
 }
-@media(max-width: 480px){
+@media(max-width: 480px) and (min-width: 371px){
     .profile{
-        margin: 30px;
+        max-width: 380px;        
+    }
+}
+@media(max-width: 370px){
+    .profile{
+        max-width: 320px;        
     }
 }
