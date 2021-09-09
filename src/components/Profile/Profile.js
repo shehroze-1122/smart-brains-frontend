@@ -1,13 +1,14 @@
-import React,{ useState } from 'react';
+import React,{ useState, useContext} from 'react';
 import Button from '@material-ui/core/Button';
+import { AuthContext } from '../../contexts/AuthContext';
 import './profile.css';
 
 
+const Profile =({handleUsernameUpdate, Alert}) =>{
 
-const Profile =({user, handleUsernameUpdate, Alert}) =>{
+    const {currentUser} = useContext(AuthContext);
 
-
-    const { name, email, joined, entries } = user;
+    const { name, email, joined, entries } = currentUser;
     const joinDate = joined.split('T');
 
     const [username, setUserName] = useState(name);

@@ -1,8 +1,12 @@
-import React from 'react'
-import './userInfo.css'
-const UserInfo = ({currentUser, thresholdEntries}) => {
+import React, {useContext} from 'react';
+import './userInfo.css';
+import { AuthContext } from '../../contexts/AuthContext';
+
+const UserInfo = ({thresholdEntries}) => {
+
+  const {currentUser} = useContext(AuthContext);
   
-  const  {name, entries } = currentUser;
+  const  { name, entries } = currentUser;
 
     return (
         <div className="user-info pa1 tc">

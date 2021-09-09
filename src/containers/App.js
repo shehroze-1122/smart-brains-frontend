@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment} from 'react';
+import React, { useState, useRef, Fragment, useContext} from 'react';
 import Particles from 'react-particles-js';
 import NavigationHome from '../components/Navigation/NavigationHome';
 import NavigationSignIn from '../components/Navigation/NavigationSignIn';
@@ -13,12 +13,11 @@ import Register from '../components/register/Register';
 import Profile from '../components/Profile/Profile';
 import Alert from '../components/Alert/Alert';
 import NotFound404 from '../components/NotFound404/NotFound404';
+import { AuthProvider, AuthContext } from '../contexts/AuthContext';
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import 'tachyons';
-
-
-
 
 const params = {
   particles: {
@@ -42,20 +41,20 @@ const useScroll = () => {
 
 
 const App = ()=> {
-
+  const {currentUser, setCurrentUser} = useContext(AuthContext);
   const [searchField, setSearchField] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [boxValues, setBoxValues] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [validBoundingData, setValidBoundingData] = useState(true);
-  const [currentUser, setCurrentUser] = useState({
-    id: '',
-    name: '',
-    email: '',
-    joined: '',
-    entries: 0
-  });
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [currentUser, setCurrentUser] = useState({
+  //   id: '',
+  //   name: '',
+  //   email: '',
+  //   joined: '',
+  //   entries: 0
+  // });
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
 
 
@@ -146,19 +145,7 @@ const App = ()=> {
   }
  
 
-  const loadUser = (user)=>{
-    setCurrentUser({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      joined: user.joined,
-      entries: user.entries
-    });
-  }
 
-  const handleAuthentication = (loginState)=>{
-    setIsAuthenticated(loginState);
-  }
   const handleSignOut = ()=>{
     setImageUrl('');
     setSearchField('');
@@ -168,9 +155,7 @@ const App = ()=> {
   }
 
   const handleUsernameUpdate = (newName)=>{
-    console.log(newName)
     setCurrentUser(Object.assign(currentUser, {name: newName}));
-
   }
 
   return (
@@ -182,30 +167,38 @@ const App = ()=> {
             <Route exact path="/">
               <Fragment>
                 <NavigationSignIn/>
-                <SignIn loadUser={loadUser} handleAuthentication={handleAuthentication} isAuthenticated={isAuthenticated}/>
+                {/* <AuthProvider> */}
+                  <SignIn/>
+                {/* </AuthProvider> */}
               </Fragment>
             </Route>
 
             <Route exact path="/register">
               <Fragment>
                 <NavigationSignIn/>
-                <Register loadUser={loadUser} handleAuthentication={handleAuthentication}/>
+                {/* <AuthProvider> */}
+                 <Register/>
+                {/* </AuthProvider> */}
               </Fragment>
             </Route>
 
-            <HomeProtectedRoute exact path="/home" isAuthenticated={isAuthenticated}>
-                 <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
-                 <Logo/>
-                 <Header/>
-                 <UserInfo currentUser={currentUser} thresholdEntries={thresholdEntries}/>
-                 <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} entries={currentUser.entries} isImageLoading={isImageLoading}/>
-                 <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
-            </HomeProtectedRoute>
+            {/* <AuthProvider> */}
 
-            <HomeProtectedRoute exact path="/profile" isAuthenticated={isAuthenticated}>
-              <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
-              <Profile user={currentUser}  handleUsernameUpdate={handleUsernameUpdate} Alert={Alert}/>
-            </HomeProtectedRoute>
+              <HomeProtectedRoute exact path="/home">
+                  <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
+                  <Logo/>
+                  <Header/>
+                  <UserInfo thresholdEntries={thresholdEntries}/>
+                  <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} isImageLoading={isImageLoading}/>
+                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
+              </HomeProtectedRoute>
+
+              <HomeProtectedRoute exact path="/profile">
+                <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
+                <Profile handleUsernameUpdate={handleUsernameUpdate} Alert={Alert}/>
+              </HomeProtectedRoute>
+
+            {/* </AuthProvider> */}
 
             <Route path="/*">
               <NotFound404/>

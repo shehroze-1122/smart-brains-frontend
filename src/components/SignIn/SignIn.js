@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 import {Link, useHistory} from 'react-router-dom';
 import './signin.css';
 
-const SignIn = ({loadUser, handleAuthentication}) => {
+const SignIn = () => {
+
+    const {setIsAuthenticated, setCurrentUser} = useContext(AuthContext);
     const history = useHistory();
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
     const [signInError, setSignInError ] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    const loadUser = (user)=>{
+        setCurrentUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          joined: user.joined,
+          entries: user.entries
+        });
+      }
 
     const signInSubmit = () =>{
 
@@ -24,7 +37,7 @@ const SignIn = ({loadUser, handleAuthentication}) => {
         .then(response =>response.json())
         .then(data => {
             if(data !== "failed"){
-                handleAuthentication(true);
+                setIsAuthenticated(true);
                 loadUser(data);
                 setIsLoading(false);
                 history.push("/home");

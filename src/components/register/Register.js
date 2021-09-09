@@ -1,8 +1,11 @@
-import {React, useState} from 'react';
+import {React, useState, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 import './register.css';
 
-const Register = ({loadUser, handleAuthentication}) => {
+const Register = () => {
+
+    const [setIsAuthenticated, setCurrentUser] = useContext(AuthContext);
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +27,16 @@ const Register = ({loadUser, handleAuthentication}) => {
         setName(event.target.value)
     }
 
+    const loadUser = (user)=>{
+        setCurrentUser({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          joined: user.joined,
+          entries: user.entries
+        });
+      }
+
     const registerUser = ()=>{
         if(email && password && name){
             setIslLoading(true);
@@ -40,7 +53,7 @@ const Register = ({loadUser, handleAuthentication}) => {
             .then(response=>response.json())
             .then(user=>{
                 if(user.id){
-                    handleAuthentication(true);
+                    setIsAuthenticated(true);
                     loadUser(user);
                     history.push("/home");
 

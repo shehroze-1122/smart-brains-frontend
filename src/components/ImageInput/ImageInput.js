@@ -1,5 +1,5 @@
-import React from 'react'
-import './imageInput.css'
+import React from 'react';
+import './imageInput.css';
 
 const ImageInput = ({handleSearchBox, handleImageSubmit, imageRef, isImageLoading}) => {
     
