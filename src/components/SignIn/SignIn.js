@@ -40,6 +40,7 @@ const SignIn = () => {
                 setIsAuthenticated(true);
                 loadUser(data);
                 setIsLoading(false);
+                console.log('donee')
                 history.push("/home");
                 
             }else{

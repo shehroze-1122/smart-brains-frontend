@@ -5,7 +5,7 @@ import './register.css';
 
 const Register = () => {
 
-    const [setIsAuthenticated, setCurrentUser] = useContext(AuthContext);
+    const {setIsAuthenticated, setCurrentUser} = useContext(AuthContext);
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

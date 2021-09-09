@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ImageContext } from '../../contexts/ImageContext';
 import './navigation.css'
 
-const NavigationHome = ({handleSignOut, Alert}) => {
+const NavigationHome = ({Alert}) => {
 
     const [homeLoaded, setHomeLoaded] = useState(false);
+    const {setImageUrl, setSearchField, setButtonClicked, setBoxValues} = useContext(ImageContext);
 
+    const handleSignOut = ()=>{
+        setImageUrl('');
+        setSearchField('');
+        setButtonClicked(false);
+        setBoxValues([]);
+    
+      }
+    
     useEffect(()=>{
         setHomeLoaded(true);
     },[])

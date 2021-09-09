@@ -11,6 +11,7 @@ export const AuthProvider = (props) =>{
         joined: '',
         entries: 0
       });
+      console.log(isAuthenticated);
 
     return(
         <AuthContext.Provider value={{isAuthenticated: isAuthenticated, setIsAuthenticated: setIsAuthenticated, currentUser:currentUser, setCurrentUser:setCurrentUser}}>

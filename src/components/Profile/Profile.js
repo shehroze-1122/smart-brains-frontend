@@ -4,9 +4,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 import './profile.css';
 
 
-const Profile =({handleUsernameUpdate, Alert}) =>{
+const Profile =({ Alert}) =>{
 
-    const {currentUser} = useContext(AuthContext);
+    const {currentUser, setCurrentUser} = useContext(AuthContext);
 
     const { name, email, joined, entries } = currentUser;
     const joinDate = joined.split('T');
@@ -39,6 +39,10 @@ const Profile =({handleUsernameUpdate, Alert}) =>{
         document.removeEventListener("click", onClickOutsideListener)
     }
 
+    const handleUsernameUpdate = (newName)=>{
+        setCurrentUser(Object.assign(currentUser, {name: newName}));
+      }
+    
     const updateUsername = ()=>{
 
         fetch('https://afternoon-hollows-86751.herokuapp.com/updateName', {

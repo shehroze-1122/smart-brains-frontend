@@ -1,8 +1,11 @@
 import React, {useContext} from 'react';
 import './userInfo.css';
 import { AuthContext } from '../../contexts/AuthContext';
+import { ImageContext } from '../../contexts/ImageContext';
 
-const UserInfo = ({thresholdEntries}) => {
+const UserInfo = () => {
+
+  const {thresholdEntries} = useContext(ImageContext);
 
   const {currentUser} = useContext(AuthContext);
   

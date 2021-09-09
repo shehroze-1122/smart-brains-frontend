@@ -1,4 +1,4 @@
-import React, { useState, useRef, Fragment, useContext} from 'react';
+import React, { Fragment } from 'react';
 import Particles from 'react-particles-js';
 import NavigationHome from '../components/Navigation/NavigationHome';
 import NavigationSignIn from '../components/Navigation/NavigationSignIn';
@@ -13,8 +13,8 @@ import Register from '../components/register/Register';
 import Profile from '../components/Profile/Profile';
 import Alert from '../components/Alert/Alert';
 import NotFound404 from '../components/NotFound404/NotFound404';
-import { AuthProvider, AuthContext } from '../contexts/AuthContext';
-
+import { AuthProvider } from '../contexts/AuthContext';
+import { ImageProvider } from '../contexts/ImageContext';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 import 'tachyons';
@@ -32,180 +32,58 @@ const params = {
 }
 
 
-const useScroll = () => {
-  const elRef = useRef(null);
-  const executeScroll = () => elRef.current.scrollIntoView();
-
-  return [executeScroll, elRef];
-};
 
 
 const App = ()=> {
-  const {currentUser, setCurrentUser} = useContext(AuthContext);
-  const [searchField, setSearchField] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [boxValues, setBoxValues] = useState([]);
-  const [buttonClicked, setButtonClicked] = useState(false);
-  const [validBoundingData, setValidBoundingData] = useState(true);
-  // const [currentUser, setCurrentUser] = useState({
-  //   id: '',
-  //   name: '',
-  //   email: '',
-  //   joined: '',
-  //   entries: 0
-  // });
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isImageLoading, setIsImageLoading] = useState(false);
 
 
-  const [executeScroll, elRef] = useScroll();
-
-  const thresholdEntries = 50;
-  const handleSearchBox = (event) =>{
-    setSearchField(event.target.value);
-  }
-
-  const calculateImageCoordinates = (response)=>{
-
-    const image = document.getElementById('img');
-    const width = Number(image.width);
-    const height = Number(image.height);
-
-    const regions = response.outputs[0].data.regions;
-    const boundingBoxes = regions.map((region)=>region.region_info.bounding_box);
-
-    boundingBoxes.forEach((boundingBox)=>{
-      boundingBox.top_row = boundingBox.top_row*height;
-      boundingBox.left_col = boundingBox.left_col*width;
-      boundingBox.right_col = width - (boundingBox.right_col*width);
-      boundingBox.bottom_row = height - (boundingBox.bottom_row*height);
-    })
-   
-    executeScroll();
-    setBoxValues(boundingBoxes)
-  }
-
-
-  const handleImageSubmit = () =>{
-    setButtonClicked(true);
-    
-    if(searchField !=='' && currentUser.entries<thresholdEntries){
-      setImageUrl(searchField);
-      setIsImageLoading(true);
-
-      fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify( {
-          url: searchField,
-          id: currentUser.id
-        }) 
-      })
-      .then(data=>data.json())
-      .then(response =>{
-
-        if(response.outputs){
-          setValidBoundingData(true);
-          calculateImageCoordinates(response);
-        }
-        else{
-          setValidBoundingData(false);
-        }
-       setIsImageLoading(false);
-      })
-      .catch(err=> {
-        console.log("Error", err)
-        setValidBoundingData(false);
-        setIsImageLoading(false);
-      });
-    
-      updateEntries();
-
-    }
-    
-    if(currentUser.entries === thresholdEntries){
-      alert("You have reached your limit for number of entries");
-    }
-    
-        
-  }
-
-  const updateEntries = async () =>{
-
-      const resp = await fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
-      method: 'put',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify( {
-        id: currentUser.id
-      }) 
-    })
-    const newEntries = await resp.json()
-    setCurrentUser(Object.assign(currentUser, {entries: newEntries}))
-
-  }
- 
-
-
-  const handleSignOut = ()=>{
-    setImageUrl('');
-    setSearchField('');
-    setButtonClicked(false);
-    setBoxValues([]);
-
-  }
-
-  const handleUsernameUpdate = (newName)=>{
-    setCurrentUser(Object.assign(currentUser, {name: newName}));
-  }
 
   return (
     <div>
-       <Particles className="background-particles" params={params}/> 
+      <Particles className="background-particles" params={params}/> 
       {navigator.onLine? null: <Alert alertTitle="Network Error" alertMessage="Sorry couldn't connect to the server. Please try again later" color="danger"/>}
+      <AuthProvider>
         <Router>
-         <Switch>
-            <Route exact path="/">
-              <Fragment>
-                <NavigationSignIn/>
-                {/* <AuthProvider> */}
+          <Switch>
+            
+              <Route exact path="/">
+                <Fragment>
+                  <NavigationSignIn/>
                   <SignIn/>
-                {/* </AuthProvider> */}
-              </Fragment>
-            </Route>
+                </Fragment>
+              </Route>
 
-            <Route exact path="/register">
-              <Fragment>
-                <NavigationSignIn/>
-                {/* <AuthProvider> */}
-                 <Register/>
-                {/* </AuthProvider> */}
-              </Fragment>
-            </Route>
-
-            {/* <AuthProvider> */}
-
+              <Route exact path="/register">
+                <Fragment>
+                  <NavigationSignIn/>
+                  <Register/>
+                </Fragment>
+              </Route>
+              
               <HomeProtectedRoute exact path="/home">
-                  <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
+                <ImageProvider>
+                  <NavigationHome Alert={Alert}/>
                   <Logo/>
                   <Header/>
-                  <UserInfo thresholdEntries={thresholdEntries}/>
-                  <ImageInput handleSearchBox = {handleSearchBox} imageRef={elRef} handleImageSubmit={handleImageSubmit} isImageLoading={isImageLoading}/>
-                  <FaceRecognitionBox imageSource = {imageUrl} faceBoxesCoordinates={boxValues} isButtonClicked={buttonClicked} validBoundingData={validBoundingData}/>
+                  <UserInfo/>
+                  <ImageInput/>
+                  <FaceRecognitionBox />
+                </ImageProvider>
               </HomeProtectedRoute>
 
-              <HomeProtectedRoute exact path="/profile">
-                <NavigationHome handleSignOut={handleSignOut} Alert={Alert}/>
-                <Profile handleUsernameUpdate={handleUsernameUpdate} Alert={Alert}/>
+              <HomeProtectedRoute exact path="/profile">  
+                  <ImageProvider>
+                    <NavigationHome Alert={Alert}/>
+                    <Profile Alert={Alert}/>     
+                  </ImageProvider>           
               </HomeProtectedRoute>
-
-            {/* </AuthProvider> */}
-
-            <Route path="/*">
-              <NotFound404/>
-            </Route>
-         </Switch>
-       </Router>
-       
+              
+              <Route path="/*">
+                <NotFound404/>
+              </Route> 
+           </Switch>
+         </Router>
+      </AuthProvider> 
     </div>
   );
 }
