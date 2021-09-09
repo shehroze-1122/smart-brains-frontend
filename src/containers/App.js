@@ -31,12 +31,7 @@ const params = {
   }
 }
 
-
-
-
 const App = ()=> {
-
-
 
   return (
     <div>
