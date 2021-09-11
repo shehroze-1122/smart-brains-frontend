@@ -38,6 +38,7 @@ const App = ()=> {
       <Particles className="background-particles" params={params}/> 
       {navigator.onLine? null: <Alert alertTitle="Network Error" alertMessage="Sorry couldn't connect to the server. Please try again later" color="danger"/>}
       <AuthProvider>
+      <ImageProvider>
         <Router>
           <Switch>
             
@@ -56,21 +57,18 @@ const App = ()=> {
               </Route>
               
               <HomeProtectedRoute exact path="/home">
-                <ImageProvider>
+                
                   <NavigationHome Alert={Alert}/>
                   <Logo/>
                   <Header/>
                   <UserInfo/>
                   <ImageInput/>
                   <FaceRecognitionBox />
-                </ImageProvider>
               </HomeProtectedRoute>
 
               <HomeProtectedRoute exact path="/profile">  
-                  <ImageProvider>
                     <NavigationHome Alert={Alert}/>
                     <Profile Alert={Alert}/>     
-                  </ImageProvider>           
               </HomeProtectedRoute>
               
               <Route path="/*">
@@ -78,6 +76,7 @@ const App = ()=> {
               </Route> 
            </Switch>
          </Router>
+         </ImageProvider>
       </AuthProvider> 
     </div>
   );
