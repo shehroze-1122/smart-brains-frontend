@@ -8,7 +8,9 @@
 }
 .profile-item{
     padding: 5px;
-    border-bottom: 1px solid #dedfe0;
+}
+hr{
+    color: rgb(186, 186, 186);
 }
 .profile-item label{
     display: block;

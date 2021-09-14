@@ -90,16 +90,17 @@ const Profile =({ Alert}) =>{
                     <Button  variant="contained" color="primary" size="small" id='update-name-button' style={{display:'none'}} disabled={username===name || username===''} onClick={()=>updateUsername()}>Update</Button>
                     
                 </div>
+                <hr/>
                 <div className="profile-item">
                     <label>Email</label>
                     <p>{email}</p>
                 </div>
-
+                <hr/>
                 <div className="profile-item">
                     <label>Joined</label>
                     <p>{`${joinDate[0]}`}</p>
                 </div>
-
+                <hr/>
                 <div className="profile-item">
                     <label>Entry count</label>
                     <p>{entries}</p>       
