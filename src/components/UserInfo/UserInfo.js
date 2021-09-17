@@ -13,17 +13,14 @@ const UserInfo = () => {
 
     return (
         <div className="user-info pa1 tc">
-          <div className="f4 mt2">
-              <span className='f2 pa2'>{`${name},`}</span>  
+          <div className="mt1">
+              <span className='f3 pa2'>{`${name},`}</span>  
               {`your current number of image entries is`}
-              <span className="f1 pa2">{`${entries}`}</span>
+              <span className="f3 pa2">{`${entries}`}</span>
               <div className="tc mt2">
-
                 <p className="black pv2 ph3 br3 shadow-5 center grow bn">Entries Remaining: {thresholdEntries-entries}</p>
-
             </div>
           </div>
-            
         </div>
     )
 }

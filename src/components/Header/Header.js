@@ -6,7 +6,7 @@ const Header = () => {
             <div id="header-container" >
                 <h1>SMART BRAINS</h1>   
             </div>
-            <p className="f4 tc mt2 pa1">{'Smart Brain is able to detect the faces in your images. Give it a try'}</p>
+            <p className="f4 tc mt2 pa1">{'Smart Brains is able to detect the faces in your images. Give it a try'}</p>
 
         </div>
 
