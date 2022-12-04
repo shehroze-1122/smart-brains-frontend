@@ -49,7 +49,7 @@ const ImageInput = () => {
           setImageUrl(searchField);
           setIsImageLoading(true);
     
-          fetch('https://afternoon-hollows-86751.herokuapp.com/imageUrl', {
+          fetch(`${process.env.REACT_APP_SERVER_URL}/imageUrl`, {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify( {
@@ -88,7 +88,7 @@ const ImageInput = () => {
     
     const updateEntries = async () =>{
     
-          const resp = await fetch('https://afternoon-hollows-86751.herokuapp.com/image', {
+          const resp = await fetch(`${process.env.REACT_APP_SERVER_URL}/image`, {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify( {

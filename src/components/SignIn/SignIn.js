@@ -26,7 +26,7 @@ const SignIn = () => {
 
         if(signInEmail && signInPassword){
             setIsLoading(true);
-            fetch('https://afternoon-hollows-86751.herokuapp.com/signin',{
+            fetch(`${process.env.REACT_APP_SERVER_URL}/signin`,{
             method:'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({

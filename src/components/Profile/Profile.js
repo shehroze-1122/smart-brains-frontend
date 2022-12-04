@@ -45,7 +45,7 @@ const Profile =({ Alert}) =>{
     
     const updateUsername = ()=>{
 
-        fetch('https://afternoon-hollows-86751.herokuapp.com/updateName', {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/updateName`, {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
