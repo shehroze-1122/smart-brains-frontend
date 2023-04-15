@@ -9,7 +9,7 @@ const SignIn = () => {
     const history = useHistory();
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
-    const [signInError, setSignInError ] = useState(false);
+    const [signInError, setSignInError ] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const loadUser = (user)=>{
@@ -36,17 +36,15 @@ const SignIn = () => {
         })
         .then(response =>response.json())
         .then(data => {
-            if(data !== "failed"){
-                setIsAuthenticated(true);
-                loadUser(data);
-                setIsLoading(false);
-                console.log('donee')
-                history.push("/home");
+            if(data.error){
+                setSignInError(data.error)
                 
             }else{
-                setIsLoading(false);
-                setSignInError(true);
+                setIsAuthenticated(true);
+                loadUser(data);
+                history.push("/home");
             }
+            setIsLoading(false);
             
         })
         .catch((err)=>{
@@ -83,7 +81,7 @@ const SignIn = () => {
                         <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" onChange={handlePassword} required type="password" name="password"  id="password" />
                     </div>
                     </fieldset>
-                    {signInError? <p className='db fw3 lh-copy f5 pt0 mt0 white'>Wrong email or password</p>:null}
+                    {signInError && <p className='db fw3 lh-copy f5 pt0 mt0 white'>{signInError}</p>}
 
                     <div className="tc">
                         <input className="b ph3 pv2 input-reset ba black b--black bg-transparent grow pointer f4 dib" type="submit" value={isLoading? "Signing in...": "Sign In"} disabled={isLoading} required onClick={()=>signInSubmit()}/>
