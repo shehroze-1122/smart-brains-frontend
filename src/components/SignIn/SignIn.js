@@ -42,9 +42,9 @@ const SignIn = () => {
             }else{
                 setIsAuthenticated(true);
                 loadUser(data);
+                setIsLoading(false);
                 history.push("/home");
             }
-            setIsLoading(false);
             
         })
         .catch((err)=>{
