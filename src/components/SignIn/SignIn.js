@@ -36,13 +36,12 @@ const SignIn = () => {
         })
         .then(response =>response.json())
         .then(data => {
+            setIsLoading(false);
             if(data.error){
                 setSignInError(data.error)
-                
             }else{
                 setIsAuthenticated(true);
                 loadUser(data);
-                setIsLoading(false);
                 history.push("/home");
             }
             
