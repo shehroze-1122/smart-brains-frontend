@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Tilt from 'react-tilt';
+import Tilt from 'react-parallax-tilt';
 import { ImageContext } from '../../contexts/ImageContext';
 import './FaceRecognitionBox.css';
 
@@ -10,15 +10,8 @@ const FaceRecognitionBox = () => {
         if(imageUrl && buttonClicked && validBoundingData){
             return(
                 <div className="image center ma3 pa3" >
-                    <div className="absolute mt2">
-                        <Tilt options={{
-                        reverse: false,
-                        max: 10,
-                        speed: 300,
-                        transition: true,
-                        axis: null,
-                        reset: true,
-                        easing: 'cubic-bezier(.03,.98,.52,.99)'}} >
+                    <div className="relative mt2">
+                        <Tilt>
 
                             <img id="img" src={imageUrl} width="600px"  alt='' />
                         
