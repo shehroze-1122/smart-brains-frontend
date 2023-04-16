@@ -49,6 +49,19 @@ hr{
     padding: 5px;
     text-align: center;
 }
+
+#update-name-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: rgb(9, 106, 253);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#update-name-button:hover {
+    background-color: rgb(0, 92, 229);
+}
 @media(max-width: 768px){
     .profile-item label{
         font-size: 0.9rem;

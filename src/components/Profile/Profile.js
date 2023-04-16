@@ -1,5 +1,4 @@
 import React,{ useState, useContext} from 'react';
-import Button from '@material-ui/core/Button';
 import { AuthContext } from '../../contexts/AuthContext';
 import './profile.css';
 
@@ -83,11 +82,11 @@ const Profile =({ Alert}) =>{
                 <div className="profile-item">
                     <label htmlFor="username">Name</label>
                     <div className="profile-name">
-                        <p><input name="username" id="name-editable" type="text" defaultValue={username} onChange={handleNameChange} onClick={()=>selectInput()}/>
-                        <i className="far fa-edit black" onClick={()=>selectInput()}></i></p>
+                        <p><input name="username" id="name-editable" type="text" defaultValue={username} onChange={handleNameChange} onClick={selectInput}/>
+                        <i className="far fa-edit black" onClick={selectInput}></i></p>
                     </div>
 
-                    <Button  variant="contained" color="primary" size="small" id='update-name-button' style={{display:'none'}} disabled={username===name || username===''} onClick={()=>updateUsername()}>Update</Button>
+                    <button id='update-name-button' style={{display:'none'}} disabled={username===name || username===''} onClick={updateUsername}>Update</button>
                     
                 </div>
                 <hr/>
